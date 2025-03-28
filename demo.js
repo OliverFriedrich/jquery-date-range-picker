@@ -6,12 +6,19 @@ $(function()
 		window.console = {};
 		window.console.log = function(){};
 	}
-		
+
+    /**
+	 * Assign an id to each of the demo elements for easy reference.
+     */
+	$('li.demo').each(function(index) {
+        $(this).attr('id', 'demo' + (index + 1));
+    });
+
 	/*
 	define a new language named "custom"
 	*/
 
-	$.dateRangePickerLanguages['custom'] = 
+	$.dateRangePickerLanguages['custom'] =
 	{
 		'selected': 'Choosed:',
 		'days': 'Days',
@@ -41,10 +48,10 @@ $(function()
 		'default-range' : 'Please select a date range between %d and %d days',
 		'default-default': 'This is costom language'
 	};
-	
+
 	$('#date-range0').dateRangePicker(
 	{
-	}).bind('datepicker-first-date-selected', function(event, obj)
+	}).on('datepicker-first-date-selected', function(event, obj)
 	{
 		/* This event will be triggered when first date is selected */
 		console.log('first-date-selected',obj);
@@ -53,7 +60,7 @@ $(function()
 		// 		date1: (Date object of the earlier date)
 		// }
 	})
-	.bind('datepicker-change',function(event,obj)
+	.on('datepicker-change',function(event,obj)
 	{
 		/* This event will be triggered when second date is selected */
 		console.log('change',obj);
@@ -64,27 +71,27 @@ $(function()
 		//	 	value: "2013-06-05 to 2013-06-07"
 		// }
 	})
-	.bind('datepicker-apply',function(event,obj)
+	.on('datepicker-apply',function(event,obj)
 	{
 		/* This event will be triggered when user clicks on the apply button */
 		console.log('apply',obj);
 	})
-	.bind('datepicker-close',function()
+	.on('datepicker-close',function()
 	{
 		/* This event will be triggered before date range picker close animation */
 		console.log('before close');
 	})
-	.bind('datepicker-closed',function()
+	.on('datepicker-closed',function()
 	{
 		/* This event will be triggered after date range picker close animation */
 		console.log('after close');
 	})
-	.bind('datepicker-open',function()
+	.on('datepicker-open',function()
 	{
 		/* This event will be triggered before date range picker open animation */
 		console.log('before open');
 	})
-	.bind('datepicker-opened',function()
+	.on('datepicker-opened',function()
 	{
 		/* This event will be triggered after date range picker open animation */
 		console.log('after open');
@@ -149,7 +156,7 @@ $(function()
 		startOfWeek: 'sunday',
 		language:'en',
 		showShortcuts: true,
-		customShortcuts: 
+		customShortcuts:
 		[
 			//if return an array of two dates, it will select the date range between the two dates
 			{
@@ -174,15 +181,15 @@ $(function()
 				}
 			}
 		]
-	}).bind('datepicker-apply',function(event,obj)
+	}).on('datepicker-apply',function(event,obj)
 	{
 		console.log(obj);
 	});
 
 	$('#date-range101').dateRangePicker(
 	{
-		showShortcuts: true,	
-		shortcuts : 
+		showShortcuts: true,
+		shortcuts :
 		{
 			'next-days': [3,5,7],
 			'next': ['week','month','year']
@@ -192,7 +199,7 @@ $(function()
 	$('#date-range102').dateRangePicker(
 	{
 		showShortcuts: true,
-		shortcuts : 
+		shortcuts :
 		{
 			'prev-days': [3,5,7],
 			'prev': ['week','month','year'],
@@ -270,17 +277,17 @@ $(function()
 	$('#date-range12').dateRangePicker(
 	{
 		inline:true,
-		container: '#date-range12-container', 
-		alwaysOpen:true 
+		container: '#date-range12-container',
+		alwaysOpen:true
 	});
 
 	$('#date-range13').dateRangePicker(
 	{
 		autoClose: true,
 		singleDate : true,
-		showShortcuts: false 
+		showShortcuts: false
 	});
-	
+
 	$('#date-range13-2').dateRangePicker(
 	{
 		autoClose: true,
@@ -317,7 +324,7 @@ $(function()
 	{
 		showShortcuts: false,
 		format: 'YYYY-MM-DD'
-	}).bind('datepicker-change', function(evt, obj) {
+	}).on('datepicker-change', function(evt, obj) {
 		alert('date1: ' + obj.date1 + ' / date2: ' + obj.date2);
 	});
 
@@ -476,10 +483,36 @@ $(function()
 	});
 
 	$('#date-range51').dateRangePicker(
-	{		
+	{
         customArrowPrevSymbol: '<i class="fa fa-arrow-circle-left"></i>',
         customArrowNextSymbol: '<i class="fa fa-arrow-circle-right"></i>'
 	});
 
+	$('#date-range52').dateRangePicker(
+	{
+		monthSelect: true,
+		yearSelect: true
+	});
 
+	$('#date-range53').dateRangePicker(
+	{
+		monthSelect: true,
+		yearSelect: [1900, moment().get('year')]
+	});
+
+    $('#date-range54').dateRangePicker(
+    {
+        monthSelect: true,
+        yearSelect: function(current) {
+            return [current - 10, current + 10];
+        }
+    });
+
+	$('#date-range55').dateRangePicker(
+	{
+		monthSelect: true,
+        yearSelect: true,
+        startDate: moment().subtract(3, 'months').format('YYYY-MM-DD'),
+        endDate: moment().endOf('day').format('YYYY-MM-DD'),
+	});
 });
